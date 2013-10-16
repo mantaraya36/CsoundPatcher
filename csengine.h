@@ -20,7 +20,7 @@ public:
     void start();
     void stop();
 
-    void publishSynth(Signal s);
+    void publishSynth(Signal &s);
 
 private:
     int sr;

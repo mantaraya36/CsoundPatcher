@@ -82,6 +82,7 @@ std::string Signal::getOrc(std::vector<std::string> outtokens)
 {
     std::string orc;
     orc += m_opcode;
+    return orc;
 }
 
 
