@@ -13,8 +13,8 @@ int main()
 //    s2 = s;
 //    s3.setError(4);
     SinOsc s(Value(1000));
-    CsEngine e;
-    e.publishSynth(s);
+    //CsEngine e;
+    //e.publishSynth(s);
     return 0;
 }
 
