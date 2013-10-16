@@ -7,7 +7,7 @@ CsEngine::CsEngine()
 }
 
 
-void CsEngine::publishSynth(Signal &s)
+void CsEngine::publishSynth(Signal &s, int instrNum)
 {
     int numOutTokens = s.getNumOutTokens();
     std::vector<std::string> tokens;
