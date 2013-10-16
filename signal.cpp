@@ -81,7 +81,15 @@ Signal Signal::operator =(const Signal &value)
 std::string Signal::getOrc(std::vector<std::string> outtokens)
 {
     std::string orc;
-    orc += m_opcode;
+    for (int i = 0; i < outtokens.size(); i++) {
+        orc += outtokens[i] + " ";
+    }
+    orc += m_opcode + " ";
+    for (int i = 0; i < priv->m_inSigs.size(); i++) {
+        int numOutTokens =  priv->m_inSigs[i].getNumOutTokens();
+        std::vector<std::string> tokens;
+        orc += "a1, ";
+    }
     return orc;
 }
 
