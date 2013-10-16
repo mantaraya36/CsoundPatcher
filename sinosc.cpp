@@ -5,7 +5,7 @@ SinOsc::SinOsc(Signal freq, Signal mult, Signal add) :
 {
     m_mult = &mult;
     m_add = &add;
-    priv->m_inSigs.resize(1);
-    priv->m_inSigs[0] = freq;
+    priv->m_inSigs.clear();
+    priv->m_inSigs.push_back(freq);
 }
 

@@ -20,11 +20,6 @@ public:
     Signal &operator-(const Signal &right);
     Signal &operator*(const Signal &right);
     Signal &operator/(const Signal &right);
-//    TODO: Implement later
-//    Signal &operator+=(const Signal &right);
-//    Signal &operator-=(const Signal &right);
-//    Signal &operator/=(const Signal &right);
-//    Signal &operator*=(const Signal &right);
     Signal operator=(const Signal &value);
 
 protected:
