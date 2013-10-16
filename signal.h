@@ -29,7 +29,7 @@ public:
 
 protected:
     void setError(int error) {m_error = error;}
-    int getNumOutTokens();
+    int getNumOutTokens(){return m_numOutTokens;};
     std::string getOrc(std::vector<std::string> outtokens);
 
     int m_error;

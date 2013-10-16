@@ -7,7 +7,7 @@ Signal::Signal()
 
 Signal::Signal(const Signal &sig)
 {
-    std::cout << "Copy constructor----";
+    std::cout << "Copy constructor----" << std::endl;
     priv = sig.priv;
     priv->reference();
 }
@@ -16,6 +16,7 @@ Signal::Signal(std::string opcode, int numOutSigs) :
     m_opcode(opcode), m_numOutTokens(numOutSigs)
 {
     priv = new Signal_Priv;
+    std::cout << opcode << " created." << std::endl;
 //    m_inSigs = inSigs;
 }
 
@@ -76,9 +77,6 @@ Signal Signal::operator =(const Signal &value)
     return outsig;
 }
 
-int Signal::getNumOutTokens()
-{
-}
 
 std::string Signal::getOrc(std::vector<std::string> outtokens)
 {
@@ -90,6 +88,7 @@ std::string Signal::getOrc(std::vector<std::string> outtokens)
 Value::Value(double value) :
     Signal("", 1)
 {
+    std::cout << "Value created: " << value << std::endl;
     m_value = value;
 }
 
