@@ -22,12 +22,16 @@ public:
 
     void publishSynth(Signal &s, int instrNum = -1);
 
+    int getNumInstruments(){return numInstruments;};
+
 private:
     int sr;
     int ksmps;
     bool rt;
     std::string inDevice;  // Device for rt mode or filename for non-rt
     std::string outDevice;
+
+    int numInstruments;
 };
 
 #endif // CSENGINE_H

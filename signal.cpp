@@ -1,4 +1,3 @@
-#include <iostream>
 #include "signal.h"
 
 Signal::Signal()
@@ -7,7 +6,7 @@ Signal::Signal()
 
 Signal::Signal(const Signal &sig)
 {
-    std::cout << "Copy constructor----" << std::endl;
+    //std::cout << "Copy constructor----" << std::endl;
     priv = sig.priv;
     priv->reference();
 }
@@ -16,7 +15,7 @@ Signal::Signal(std::string opcode, int numOutSigs) :
     m_opcode(opcode), m_numOutTokens(numOutSigs)
 {
     priv = new Signal_Priv;
-    std::cout << opcode << " created." << std::endl;
+    //std::cout << opcode << " created." << std::endl;
 //    m_inSigs = inSigs;
 }
 
@@ -34,6 +33,15 @@ Signal& Signal::operator+(const Signal &right)
 
     Signal out();
 
+}
+
+//We should just template this for all added types
+Signal Signal::operator+(double addedValue)
+{
+    //this will totally memory leak
+    //needs to be a scoped pointer
+    Value* newValue = new Value(addedValue);
+    return Compound_Signal(*this, *newValue);
 }
 
 Signal& Signal::operator-(const Signal &right)
@@ -81,6 +89,9 @@ Signal Signal::operator =(const Signal &value)
 std::string Signal::getOrc(std::vector<std::string> outtokens)
 {
     std::string orc;
+    //std::string sigNumStr = std::to_string(signalNumber);
+    //orc += "asig" + sigNumStr + " ";
+    orc += "asig ";
     for (int i = 0; i < outtokens.size(); i++) {
         orc += outtokens[i] + " ";
     }
@@ -91,6 +102,15 @@ std::string Signal::getOrc(std::vector<std::string> outtokens)
         orc += "a1, ";
     }
     return orc;
+}
+
+
+Compound_Signal::Compound_Signal(Signal &_signalA, Signal &_signalB)
+{
+    std::cout << "Compound Signal created." << std::endl;
+
+    signalA = &_signalA;
+    signalB = &_signalB;
 }
 
 
@@ -106,20 +126,3 @@ Value::Value(double value) :
 //{
 //    m_opcode = "+";
 //}
-
-
-Signal_Priv::Signal_Priv()
-{
-    m_refCounter = 1;
-}
-
-void Signal_Priv::reference()
-{
-    m_refCounter++;
-}
-
-int Signal_Priv::dereference()
-{
-    m_refCounter--;
-    return m_refCounter;
-}
