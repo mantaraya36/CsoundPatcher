@@ -33,6 +33,8 @@ public:
 
     Signal operator+(double addedValue);
 
+    std::string signalPrint();
+
 protected:
     void setError(int error) {m_error = error;}
     int getNumOutTokens() {return m_numOutTokens;}
@@ -41,6 +43,8 @@ protected:
     int signalNumber;
     void setSignalNum(int _sigNum){signalNumber = _sigNum;};
     int getSignalNum(){return signalNumber;};
+
+    bool isAudioRate;
 
     int m_error;
     int m_numOutTokens;
@@ -63,11 +67,15 @@ class Compound_Signal: public Signal
 {
 public:
     Compound_Signal(Signal &_signalA, Signal &_signalB, int _operand);
+    std::string signalPrint();
 
 private:
-Signal *signalA;
-Signal *signalB;
-int operand;
+    Signal *signalA;
+    Signal *signalB;
+
+    int operand;
+    std::string operandString;
+    void setOperandString();
 };
 
 
@@ -96,6 +104,7 @@ class Value: public Signal
 {
 public:
     Value(double value);
+    std::string signalPrint();
 
 private:
     double m_value;

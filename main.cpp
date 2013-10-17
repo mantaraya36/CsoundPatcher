@@ -23,7 +23,7 @@ int main()
     e.publishSynth(s2);
 
     SinOsc s3(SinOsc(Value(50))+100.0); // asig poscil 1, 50 --- asig2 poscil 1, asig + 100
-    //e.publishSynth(s3);
+    e.publishSynth(s3);
 
     return 0;
 }

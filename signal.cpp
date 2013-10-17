@@ -27,6 +27,12 @@ Signal::~Signal()
     }
 }
 
+std::string Signal::signalPrint()
+{
+    //should append instrument number
+    return "asig";
+}
+
 Signal& Signal::operator+(const Signal &right)
 {
     // TODO: check for feedback in all operators (and implement properly or give an error)
@@ -99,7 +105,8 @@ std::string Signal::getOrc(std::vector<std::string> outtokens)
     for (int i = 0; i < priv->m_inSigs.size(); i++) {
         int numOutTokens =  priv->m_inSigs[i].getNumOutTokens();
         std::vector<std::string> tokens;
-        orc += "a1, ";
+        //orc += "a1, ";
+        orc += priv->m_inSigs[i].signalPrint() + ", ";
     }
     return orc;
 }
@@ -113,15 +120,53 @@ Compound_Signal::Compound_Signal(Signal &_signalA, Signal &_signalB, int _operan
     signalB = &_signalB;
 
     operand = _operand;
+    setOperandString();
+}
 
+void Compound_Signal::setOperandString()
+{
+    switch(operand)
+    {
+        case ADD:
+            operandString = "+";
+            break;
+
+        case SUBTRACT:
+            operandString = "-";
+            break;
+
+        case MULTIPLY:
+            operandString = "*";
+            break;
+
+        case DIVIDE:
+            operandString = "/";
+            break;
+
+        default:
+            operandString = "+";
+            break;
+    }
+
+}
+
+std::string Compound_Signal::signalPrint()
+{
+    return "(" + signalA->signalPrint() + operandString + signalB->signalPrint() + ")";
 }
 
 
 Value::Value(double value) :
     Signal("", 1)
 {
-    std::cout << "Value created: " << value << std::endl;
+    //std::cout << "Value created: " << value << std::endl;
     m_value = value;
+}
+
+std::string Value::signalPrint()
+{
+    //should return string version of value
+    return "value";
 }
 
 
