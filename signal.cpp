@@ -41,7 +41,7 @@ Signal Signal::operator+(double addedValue)
     //this will totally memory leak
     //needs to be a scoped pointer
     Value* newValue = new Value(addedValue);
-    return Compound_Signal(*this, *newValue);
+    return Compound_Signal(*this, *newValue, ADD);
 }
 
 Signal& Signal::operator-(const Signal &right)
@@ -105,12 +105,15 @@ std::string Signal::getOrc(std::vector<std::string> outtokens)
 }
 
 
-Compound_Signal::Compound_Signal(Signal &_signalA, Signal &_signalB)
+Compound_Signal::Compound_Signal(Signal &_signalA, Signal &_signalB, int _operand)
 {
     std::cout << "Compound Signal created." << std::endl;
 
     signalA = &_signalA;
     signalB = &_signalB;
+
+    operand = _operand;
+
 }
 
 

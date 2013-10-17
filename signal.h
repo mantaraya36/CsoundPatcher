@@ -5,6 +5,13 @@
 #include <string>
 #include <iostream>
 
+
+enum operands { 
+    ADD, 
+    SUBTRACT, 
+    MULTIPLY, 
+    DIVIDE };
+
 class Signal_Priv;
 class Compoud_Signal;
 
@@ -55,11 +62,12 @@ protected:
 class Compound_Signal: public Signal
 {
 public:
-    Compound_Signal(Signal &_signalA, Signal &_signalB);
+    Compound_Signal(Signal &_signalA, Signal &_signalB, int _operand);
 
 private:
 Signal *signalA;
-Signal *signalB;    
+Signal *signalB;
+int operand;
 };
 
 
