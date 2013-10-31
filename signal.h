@@ -46,6 +46,8 @@ protected:
 
     bool isAudioRate;
 
+    std::vector<int> signalDependencies;
+
     int m_error;
     int m_numOutTokens;
     std::string m_opcode;
