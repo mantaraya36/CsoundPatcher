@@ -24,11 +24,13 @@ public:
 
 protected:
     void setError(int error) {m_error = error;}
-    int getNumOutTokens() {return m_numOutTokens;}
-    std::string getOrc(std::vector<std::string> outtokens);
+    int getParentTokenNumber();
+    std::vector<std::string> getOutputTokens() {return m_outTokens;}
+    virtual std::string getOrc(std::vector<std::string> &outtokens);
 
     int m_error;
     int m_numOutTokens;
+    std::vector<std::string> m_outTokens;
     std::string m_opcode;
     Signal_Priv *priv;
     Signal *m_mult, *m_add;
@@ -54,7 +56,8 @@ class Value: public Signal
 {
 public:
     Value(double value);
-
+protected:
+    std::string getOrc(std::vector<std::string> &outtokens);
 private:
     double m_value;
 };

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "signal.h"
 
 Signal::Signal()
@@ -10,6 +11,7 @@ Signal::Signal(const Signal &sig)
     std::cout << "Copy constructor----" << std::endl;
     priv = sig.priv;
     priv->reference();
+    m_numOutTokens = 0;
 }
 
 Signal::Signal(std::string opcode, int numOutSigs) :
@@ -77,28 +79,57 @@ Signal Signal::operator =(const Signal &value)
     return outsig;
 }
 
+int Signal::getParentTokenNumber()
+{
+    int totalTokens = 0;
+    for (int i = 0; i < priv->m_inSigs.size(); i++) {
+        totalTokens +=  priv->m_inSigs[i].getParentTokenNumber();
+    }
+    totalTokens += m_numOutTokens;
+    return totalTokens;
+}
 
-std::string Signal::getOrc(std::vector<std::string> outtokens)
+
+std::string Signal::getOrc(std::vector<std::string> &outtokens)
 {
     std::string orc;
-    for (int i = 0; i < outtokens.size(); i++) {
-        orc += outtokens[i] + " ";
-    }
-    orc += m_opcode + " ";
+    std::vector<std::string> parentOutTokens;
     for (int i = 0; i < priv->m_inSigs.size(); i++) {
-        int numOutTokens =  priv->m_inSigs[i].getNumOutTokens();
-        std::vector<std::string> tokens;
-        orc += "a1, ";
+        orc += priv->m_inSigs[i].getOrc(outtokens);
+        parentOutTokens = priv->m_inSigs[i].getOutputTokens();
     }
+    for (int i = 0; i < m_numOutTokens; i++) {
+        orc += outtokens.back() + ",";
+        m_outTokens.push_back(outtokens.back());
+        outtokens.pop_back();
+    }
+    if (orc.size() > 0) {
+        orc = orc.substr(0, orc.size()-1);
+    }
+    orc += " " + m_opcode + " ";
+    for (int i = 0; i < parentOutTokens.size(); i++) {
+        orc += parentOutTokens[i] + ",";
+    }
+    if (parentOutTokens.size() > 0) {
+        orc = orc.substr(0, orc.size()-1);
+    }
+    orc += "\n";
     return orc;
 }
 
 
 Value::Value(double value) :
-    Signal("", 1)
+    Signal("", 0)
 {
     std::cout << "Value created: " << value << std::endl;
-    m_value = value;
+    std::ostringstream ss;
+    ss << value;
+    m_outTokens.push_back(ss.str());
+}
+
+std::string Value::getOrc(std::vector<std::string> &outtokens)
+{
+    return "";
 }
 
 
