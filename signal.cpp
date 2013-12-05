@@ -2,17 +2,17 @@
 #include <sstream>
 #include "signal.h"
 
-Signal::Signal()
-{
-}
+//Signal::Signal()
+//{
+//}
 
-Signal::Signal(const Signal &sig)
-{
-    std::cout << "Copy constructor----" << std::endl;
-    priv = sig.priv;
-    priv->reference();
-    m_numOutTokens = 0;
-}
+//Signal::Signal(const Signal &sig)
+//{
+//    std::cout << "Signal Copy constructor----" << std::endl;
+//    priv = sig.priv;
+//    priv->reference();
+//    m_numOutTokens = 0;
+//}
 
 Signal::Signal(std::string opcode, int numOutSigs) :
     m_opcode(opcode), m_numOutTokens(numOutSigs)
@@ -34,7 +34,7 @@ Signal& Signal::operator+(const Signal &right)
 {
     // TODO: check for feedback in all operators (and implement properly or give an error)
 
-    Signal out();
+    //Signal out();
 
 }
 
@@ -73,10 +73,10 @@ Signal& Signal::operator/(const Signal &right)
 
 //}
 
-Signal Signal::operator =(const Signal &value)
+Signal &Signal::operator =(const Signal &value)
 {
-    Signal outsig = value; // use copy constructor
-    return outsig;
+    //Signal outsig = value; // use copy constructor
+    //return outsig;
 }
 
 int Signal::getParentTokenNumber()
@@ -87,34 +87,6 @@ int Signal::getParentTokenNumber()
     }
     totalTokens += m_numOutTokens;
     return totalTokens;
-}
-
-
-std::string Signal::getOrc(std::vector<std::string> &outtokens)
-{
-    std::string orc;
-    std::vector<std::string> parentOutTokens;
-    for (int i = 0; i < priv->m_inSigs.size(); i++) {
-        orc += priv->m_inSigs[i].getOrc(outtokens);
-        parentOutTokens = priv->m_inSigs[i].getOutputTokens();
-    }
-    for (int i = 0; i < m_numOutTokens; i++) {
-        orc += outtokens.back() + ",";
-        m_outTokens.push_back(outtokens.back());
-        outtokens.pop_back();
-    }
-    if (orc.size() > 0) {
-        orc = orc.substr(0, orc.size()-1);
-    }
-    orc += " " + m_opcode + " ";
-    for (int i = 0; i < parentOutTokens.size(); i++) {
-        orc += parentOutTokens[i] + ",";
-    }
-    if (parentOutTokens.size() > 0) {
-        orc = orc.substr(0, orc.size()-1);
-    }
-    orc += "\n";
-    return orc;
 }
 
 
@@ -129,7 +101,7 @@ Value::Value(double value) :
 
 std::string Value::getOrc(std::vector<std::string> &outtokens)
 {
-    return "";
+    return std::string();
 }
 
 

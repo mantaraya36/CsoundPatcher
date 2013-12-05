@@ -2,12 +2,15 @@
 #define SINOSC_H
 
 #include "signal.h"
+#include <string>
 
 class SinOsc : public Signal
 {
 public:
-    SinOsc(Signal freq, Signal mult = Value(1.0), Signal add = Value(0.0));
-
+    SinOsc(Signal &freq);
+    SinOsc(double freq);
+    SinOsc(Signal &freq, Signal &mult, Signal &add);
+    virtual std::string getOrc(std::vector<std::string> &outtokens);
 private:
 };
 

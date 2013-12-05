@@ -11,8 +11,8 @@ class Signal
 {
     friend class CsEngine;
 public:
-    Signal();
-    Signal(const Signal &sig);
+    //Signal();
+    //Signal(const Signal &sig);
     Signal(std::string opcode, int numOutSigs = 1);
     ~Signal();
 
@@ -20,13 +20,14 @@ public:
     Signal &operator-(const Signal &right);
     Signal &operator*(const Signal &right);
     Signal &operator/(const Signal &right);
-    Signal operator=(const Signal &value);
+    Signal &operator=(const Signal &value);
+
+    std::vector<std::string> getOutputTokens() {return m_outTokens;}
+    virtual std::string getOrc(std::vector<std::string> &outtokens) { return "";}
 
 protected:
     void setError(int error) {m_error = error;}
     int getParentTokenNumber();
-    std::vector<std::string> getOutputTokens() {return m_outTokens;}
-    virtual std::string getOrc(std::vector<std::string> &outtokens);
 
     int m_error;
     int m_numOutTokens;
