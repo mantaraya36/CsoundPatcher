@@ -15,9 +15,9 @@ void CsEngine::publishSynth(Signal &s, int instrNum)
 {
     int numParentTokens = s.getParentTokenNumber();
     std::vector<std::string> tokens;
-    for (int i = 0; i < numParentTokens; i++) {
+    while (numParentTokens--) {
         std::ostringstream ss;
-        ss << "a" << i;
+        ss << "a" << numParentTokens;
         tokens.push_back(ss.str());
     }
     std::cout << s.getOrc(tokens) << std::endl;

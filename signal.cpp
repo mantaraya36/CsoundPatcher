@@ -21,6 +21,7 @@ Signal::Signal(std::string opcode, int numOutSigs) :
     m_opcode(opcode), m_numOutTokens(numOutSigs)
 {
     priv = new Signal_Priv;
+    m_used = false;
     std::cout << opcode << " created." << std::endl;
 //    m_inSigs = inSigs;
 }
@@ -33,12 +34,48 @@ Signal::~Signal()
     }
 }
 
+std::string Signal::getOrc(std::vector<std::string> &outtokens)
+{
+    std::string orc;
+    std::vector<std::string> parentOutTokens;
+    for (int i = 0; i < priv->m_inSigs.size(); i++) {
+        orc += priv->m_inSigs[i].getOrc(outtokens);
+        std::vector<std::string> tokens = priv->m_inSigs[i].getOutputTokens();
+        std::cout << "tokens " << tokens.size() << std::endl;
+        for (int j = 0; j < tokens.size(); j++) {
+            parentOutTokens.push_back(tokens[j]);
+            std::cout << tokens[j] << "---" << std::endl;
+        }
+    }
+    for (int i = 0; i < m_numOutTokens; i++) {
+        orc += outtokens.back() + ",";
+        m_outTokens.push_back(outtokens.back());
+        outtokens.pop_back();
+    }
+
+    if (orc.size() > 0 && orc.at(orc.size() - 1) == ',') {
+        orc = orc.substr(0, orc.size()-1);
+        orc += " ";
+    }
+    orc += m_opcode + " ";
+    for (int i = 0; i < parentOutTokens.size(); i++) {
+        orc += parentOutTokens[i] + ",";
+    }
+    if (parentOutTokens.size() > 0) {
+        orc = orc.substr(0, orc.size()-1);
+    }
+    orc += "\n";
+    m_used = true;
+    return orc;
+}
+
 Signal& Signal::operator+(const Signal &right)
 {
     // TODO: check for feedback in all operators (and implement properly or give an error)
+    std::cout << "Signal::operator+" << std::endl;
 
     //Signal out();
-
+    return *this;
 }
 
 Signal& Signal::operator-(const Signal &right)
@@ -101,12 +138,6 @@ Value::Value(double value) :
     ss << value;
     m_outTokens.push_back(ss.str());
 }
-
-std::string Value::getOrc(std::vector<std::string> &outtokens)
-{
-    return std::string();
-}
-
 
 //Add::Add()
 //{

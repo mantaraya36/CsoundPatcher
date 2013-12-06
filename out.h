@@ -8,10 +8,8 @@ namespace cspat {
 class Out : public Signal
 {
 public:
-    Out(Signal &freq);
-    Out(double freq);
-    Out(Signal &freq, Signal &mult, Signal &add);
-    virtual std::string getOrc(std::vector<std::string> &outtokens);
+    Out(Signal &out);
+    Out(Signal &out, Signal &mult, Signal &add);
 private:
 };
 

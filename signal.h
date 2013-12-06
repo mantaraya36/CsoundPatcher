@@ -13,8 +13,8 @@ class Signal
 {
     friend class CsEngine;
 public:
-    //Signal();
-    //Signal(const Signal &sig);
+//    Signal() {};
+//    Signal(const Signal &sig);
     Signal(std::string opcode, int numOutSigs = 1);
     ~Signal();
 
@@ -25,7 +25,7 @@ public:
     Signal &operator=(const Signal &value);
 
     std::vector<std::string> getOutputTokens() {return m_outTokens;}
-    virtual std::string getOrc(std::vector<std::string> &outtokens) { return "";}
+    virtual std::string getOrc(std::vector<std::string> &outtokens);
 
 protected:
     void setError(int error) {m_error = error;}
@@ -37,6 +37,7 @@ protected:
     std::string m_opcode;
     Signal_Priv *priv;
     Signal *m_mult, *m_add;
+    bool m_used;
 };
 
 class Signal_Priv
@@ -60,7 +61,7 @@ class Value: public Signal
 public:
     Value(double value);
 protected:
-    std::string getOrc(std::vector<std::string> &outtokens);
+
 private:
     double m_value;
 };
