@@ -7,6 +7,8 @@
 
 #include "signal.h"
 
+namespace cspat {
+
 class CsEngine
 {
 public:
@@ -29,5 +31,7 @@ private:
     std::string inDevice;  // Device for rt mode or filename for non-rt
     std::string outDevice;
 };
+
+}
 
 #endif // CSENGINE_H

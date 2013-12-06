@@ -4,6 +4,8 @@
 #include <sstream>
 
 
+namespace cspat {
+
 CsEngine::CsEngine()
 {
 }
@@ -19,4 +21,6 @@ void CsEngine::publishSynth(Signal &s, int instrNum)
         tokens.push_back(ss.str());
     }
     std::cout << s.getOrc(tokens) << std::endl;
+}
+
 }

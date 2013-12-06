@@ -1,10 +1,10 @@
-#include "sinosc.h"
+#include "out.h"
 #include <iostream>
 
 namespace cspat {
 
-SinOsc::SinOsc(Signal &freq, Signal &mult, Signal &add) :
-    Signal("poscil")
+Out::Out(Signal &freq, Signal &mult, Signal &add) :
+    Signal("out")
 {
     m_add = &add;
     priv->m_inSigs.clear();
@@ -12,23 +12,23 @@ SinOsc::SinOsc(Signal &freq, Signal &mult, Signal &add) :
     priv->m_inSigs.push_back(freq);
 }
 
-SinOsc::SinOsc(Signal &freq) :
-    Signal("poscil")
+Out::Out(Signal &freq) :
+    Signal("out")
 {
     priv->m_inSigs.clear();
     priv->m_inSigs.push_back(Value(1));
     priv->m_inSigs.push_back(freq);
 }
 
-SinOsc::SinOsc(double freq) :
-    Signal("poscil")
+Out::Out(double freq) :
+    Signal("out")
 {
     priv->m_inSigs.push_back(Value(1));
     priv->m_inSigs.push_back(Value(freq));
 }
 
 
-std::string SinOsc::getOrc(std::vector<std::string> &outtokens)
+std::string Out::getOrc(std::vector<std::string> &outtokens)
 {
     std::string orc;
     std::vector<std::string> parentOutTokens;

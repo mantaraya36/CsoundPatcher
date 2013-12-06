@@ -2,6 +2,9 @@
 #include <sstream>
 #include "signal.h"
 
+
+namespace cspat {
+
 //Signal::Signal()
 //{
 //}
@@ -125,4 +128,6 @@ int Signal_Priv::dereference()
 {
     m_refCounter--;
     return m_refCounter;
+}
+
 }

@@ -4,6 +4,8 @@
 #include "signal.h"
 #include <string>
 
+namespace cspat {
+
 class SinOsc : public Signal
 {
 public:
@@ -13,5 +15,7 @@ public:
     virtual std::string getOrc(std::vector<std::string> &outtokens);
 private:
 };
+
+}
 
 #endif // SINOSC_H

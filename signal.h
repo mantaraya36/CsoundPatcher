@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+namespace cspat {
+
 class Signal_Priv;
 
 // TODO: check which passing of variables can be turned to references, to improve peroformance while keeping compatibility with python and other interfaces
@@ -73,5 +75,6 @@ private:
 //    }
 //};
 
+}
 
 #endif // SIGNAL_H
