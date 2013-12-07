@@ -3,7 +3,9 @@
 
 #include <string>
 #include <vector>
-#include "csound.hpp"
+
+#include <csound.hpp>
+#include <csPerfThread.hpp>
 
 #include "signal.h"
 
@@ -19,17 +21,27 @@ public:
     std::vector<std::string> listMidiInputDevices();
     std::vector<std::string> listMidiOutputDevices();
 
-    void start();
+    int initialize(int sr = 44100, int ksmps = 128, bool rt = true, int numchnls = 2);
+
+    void play();
+    int status();
     void stop();
 
-    void publishSynth(Signal &s, int instrNum = -1);
+    int publishSynth(Signal &s, int instrNum = 0);
+
+    void synth(int instrNum, double dur, double offset = 0.0, std::vector<double> parameters = std::vector<double>());
 
 private:
-    int sr;
-    int ksmps;
-    bool rt;
+    int m_sr;
+    int m_ksmps;
+    int m_numchnls;
+    bool m_rt;
     std::string inDevice;  // Device for rt mode or filename for non-rt
     std::string outDevice;
+    Csound m_csound;
+    CsoundPerformanceThread *m_perfThread;
+    bool m_csoundRunning;
+    int m_instrCount;
 };
 
 }

@@ -16,10 +16,17 @@ int main()
     SinOsc s(1000); // asig poscil 1, 1000
     SinOsc s2(s); // asig2 poscil 1, 500
     SinOsc s3(s);
-    Out out(s3 + s2); // out asig2
+//    Out out(s3 + s2); // out asig2
+    Out out(s); // out asig2
     //SinOsc s(SinOsc(Value(50))+100); // asig poscil 1, 50 --- asig2 poscil 1, asig + 100
     CsEngine e;
-    e.publishSynth(out);
+    int synthId = e.publishSynth(out);
+    e.play();
+    e.synth(synthId, 2);
+    e.synth(synthId, 2, 3);
+    while (e.status() == 0) {
+
+    };
     return 0;
 }
 
